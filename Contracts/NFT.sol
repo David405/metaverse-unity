@@ -8,19 +8,21 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 contract Token1155 is ERC1155, Ownable {
     
     string public name;
+    string public description;
     uint256 public quantity;
     address public approvedAddress;
-    constructor(string memory _name, uint256 _quantity, address _address, string memory _url)
+    constructor(string memory _name, string memory _description, uint256 _quantity, address _address, string memory _url)
         ERC1155(_url)
     {
         name = _name;
+        description = _description;
         quantity = _quantity;
         approvedAddress = _address;
         _mint(msg.sender, 1, quantity, "");
         _setApprovalForAll(msg.sender, approvedAddress, true);
     }
 
-    function uri(uint256 _tokenId, string storage url) override public pure returns (string memory) {
+    function uri(uint256 _tokenId, string memory url) public pure returns (string memory) {
         return string(
             abi.encodePacked(
                 url, 
